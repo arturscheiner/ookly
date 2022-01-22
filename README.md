@@ -1,2 +1,2 @@
-# ookly
-A small program written in golang meant to help you to create you k8s ook lab.
+# ook
+ook is a small program writen in golang that makes easy to provision a kubernetes cluster.
