@@ -10,6 +10,7 @@ import (
 	"os"
 
 	git "github.com/go-git/go-git/v5"
+	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )
 
@@ -25,6 +26,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		get_ook()
+		check_dependencies()
 	},
 }
 
@@ -44,15 +46,31 @@ func init() {
 
 func get_ook() {
 	// Clone the given repository to the given directory
+	var AppFs = afero.NewOsFs()
 
 	userdir, err := os.UserHomeDir()
-	check(err)
-	fmt.Println(userdir)
+	koo.CheckErr(err)
 
-	_, err = git.PlainClone(userdir+"/.ook", false, &git.CloneOptions{
+	target_dir := userdir + "/.ook"
+
+	tde, err := afero.DirExists(AppFs, target_dir)
+	koo.CheckErr(err)
+
+	if tde {
+		fmt.Println(target_dir + " directory already exists!")
+		return
+	}
+	_, err = git.PlainClone(target_dir, false, &git.CloneOptions{
 		URL:      "https://github.com/arturscheiner/.ook.git",
 		Progress: os.Stdout,
 	})
 
 	koo.CheckErr(err)
+}
+
+func check_dependencies() {
+	ve := koo.CommandExists("vagrant")
+	if ve {
+		fmt.Println("vagrant is installed, check plugins for this system")
+	}
 }
