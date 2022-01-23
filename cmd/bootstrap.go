@@ -6,7 +6,10 @@ package cmd
 
 import (
 	"fmt"
+	"ookly/koo"
+	"os"
 
+	git "github.com/go-git/go-git/v5"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +24,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("bootstrap called")
+		get_ook()
 	},
 }
 
@@ -37,4 +40,19 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// bootstrapCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
+
+func get_ook() {
+	// Clone the given repository to the given directory
+
+	userdir, err := os.UserHomeDir()
+	check(err)
+	fmt.Println(userdir)
+
+	_, err = git.PlainClone(userdir+"/.ook", false, &git.CloneOptions{
+		URL:      "https://github.com/arturscheiner/.ook.git",
+		Progress: os.Stdout,
+	})
+
+	koo.CheckErr(err)
 }

@@ -11,6 +11,12 @@ import (
 	"github.com/melbahja/goph"
 )
 
+func CheckErr(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
 func OokSsh(user string, password string, server string, command string) {
 	// Start new ssh connection with private key.
 	auth := goph.Password(password)

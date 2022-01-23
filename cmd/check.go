@@ -5,7 +5,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"oobly/koo"
+	"ookly/koo"
 
 	"github.com/spf13/cobra"
 )

@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"oobly/koo"
+	"ookly/koo"
 
 	"os"
 	"os/exec"
